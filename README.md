@@ -4,8 +4,7 @@ This is a simple script that will create the folder and file structure for a cla
 
 ## Usage  
 
-CreateClass.py classname [--hassubclass] [--allowmulticlass] [--hassubclass] [--subclassnames SUBCLASSNAMES]  
-[--subclasslevel SUBCLASSLEVEL]
+CreateClass.py classname [--hassubclass] [--allowmulticlass] [--hassubclass] [--subclassnames SUBCLASSNAMES] [--subclasslevel SUBCLASSLEVEL]
 
 ## Arguments  
 
