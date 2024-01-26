@@ -1,6 +1,6 @@
-# Baldur's Gate 3 - Create Class Mod script  
+# Baldur's Gate 3 - Create New Class Mod script  
 
-This is a simple script that will create the folder and file structure for a class mod. Optional settings for multiclass and subclasses. Generates folder structure along with basic starting template files. Names, UUID, Handles are generated to create a working class if exported as is.
+This is a simple script that will create the folder and file structure for a new class mod. Optional settings for multiclass and subclasses. Generates folder structure along with basic starting template files. Names, UUID, Handles are generated to create a working class if exported as is.
 
 ## Usage  
 
