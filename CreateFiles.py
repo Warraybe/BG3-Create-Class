@@ -2,9 +2,6 @@ import os
 import uuid
 
 
-# from Builtindata import class_uuid, class_progression
-
-
 def create_uuids(main_class, subclasses=None):
     uuid_list = {
         "mod_uuid": uuid.uuid4(),
