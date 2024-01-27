@@ -9,16 +9,22 @@ def create_uuids(main_class, subclasses=None):
         "main_class_name": os.urandom(19).hex()[:37],
         "main_class_description": os.urandom(19).hex()[:37],
         "main_class_progression": uuid.uuid4(),
+        "action_resource_name": os.urandom(19).hex()[:37],
+        "action_resource_description": os.urandom(19).hex()[:37],
+        "action_resource_error": os.urandom(19).hex()[:37],
+        "action_resource_uuid": uuid.uuid4(),
     }
 
     if subclasses:
         for subclass in subclasses:
             subclass_formatted = subclass.replace(" ", "_")
             uuid_list[f"{subclass_formatted + '_uuid'}"] = uuid.uuid4()
-            uuid_list[f"{subclass_formatted + '_name'}"] = os.urandom(19).hex()[:37]
-            uuid_list[f"{subclass_formatted + '_description'}"] = os.urandom(19).hex()[
-                :37
-            ]
+            uuid_list[f"{subclass_formatted + '_name'}"] = os.urandom(19).hex()[
+                                                           :37]
+            uuid_list[f"{subclass_formatted + '_description'}"] = os.urandom(
+                19).hex()[
+                                                                  :37
+                                                                  ]
             uuid_list[f"{subclass_formatted + '_progression'}"] = uuid.uuid4()
             uuid_list[f"{subclass_formatted + '_level_one'}"] = uuid.uuid4()
 
@@ -29,7 +35,10 @@ def generate_localization(main_class, uuids, subclasses=None):
     localization_content = f"""<?xml version = "1.0" encoding = "utf-8"?>
         <contentList>
             <content contentuid = "{uuids['main_class_name']}" version = "1" >{main_class.title()}</content>
-            <content contentuid = "{uuids['main_class_description']}" version = "1" >{main_class.title()} Description</content>"""
+            <content contentuid = "{uuids['main_class_description']}" version = "1" >{main_class.title()} Description</content>
+            <content contentuid = "{uuids['action_resource_name']}" version = "1" >Action resource name</content>
+            <content contentuid = "{uuids['action_resource_description']}" version = "1" >Action resource Description</content>
+            <content contentuid = "{uuids['action_resource_error']}" version = "1" >Action resource error</content>"""
 
     if subclasses:
         for subclass in subclasses:
@@ -120,7 +129,7 @@ def generate_class_descriptions(main_class, uuids, subclasses=None):
 
 
 def generate_progression(
-    main_class, uuids, allowmulticlass, subclasses=None, subclasslevel=None
+        main_class, uuids, allowmulticlass, subclasses=None, subclasslevel=None
 ):
     progression_content = """<?xml version="1.0" encoding="UTF-8"?>
     <save>
@@ -363,16 +372,56 @@ add equipment entry "OBJ_Backpack_CampSupplies"'''
         )
 
 
+def generate_action_resource(main_class, uuids):
+    clean_class_name = main_class.title().replace(' ', '')
+    main_folder_path = os.path.join(os.path.abspath(
+        f"{clean_class_name}\\Public\\{clean_class_name}"
+    ), )
+
+    action_resource_file = os.path.join(f"{main_folder_path}",
+                                        "ActionResourceDefinitions",
+                                        "ActionResourceDefinitions.lsx")
+
+    with open(action_resource_file, "w") as f:
+        f.write(f"""<?xml version="1.0" encoding="UTF-8"?>
+<save>
+    <version major="4" minor="0" revision="4" build="600"/>
+    <region id="ActionResourceDefinitions">
+        <node id="root">
+            <children>
+                <node id="ActionResourceDefinition">
+                    <attribute id="Description" type="TranslatedString" handle="{uuids['action_resource_description']}" version="1"/>
+                    <attribute id="DisplayName" type="TranslatedString" handle="{uuids['action_resource_name']}" version="1"/> 
+                    <attribute id="Error" type="TranslatedString" handle="{uuids['action_resource_error']}" version="1"/>
+                    <attribute id="IsSpellResource" type="bool" value="false"/> 
+                    <attribute id="MaxLevel" type="uint32" value="0"/>
+                    <attribute id="MaxValue" type="uint32" value="0"/>
+                    <attribute id="DiceType" type="uint32" value="0"/> 
+                    <attribute id="Name" type="FixedString" value="Example"/> Resource name to be referenced in mod
+                    <attribute id="PartyActionResource" type="bool" value="false"/>
+                    <attribute id="ReplenishType" type="FixedString" value="Rest"/>
+                    <attribute id="ShowOnActionResourcePanel" type="bool" value="true"/>
+                    <attribute id="UUID" type="guid" value="{uuids['action_resource_uuid']}"/>
+                    <attribute id="UpdatesSpellPowerLevel" type="bool" value="false"/>
+                </node>
+            </children>
+        </node>
+    </region>
+</save>""")
+
+
 def create_files(
-    main_class,
-    allowmulticlass,
-    subclasses=None,
-    subclasslevel=None,
+        main_class,
+        allowmulticlass,
+        subclasses=None,
+        subclasslevel=None,
 ):
     uuids = create_uuids(main_class, subclasses)
     generate_localization(main_class, uuids, subclasses)
     generate_meta(main_class, uuids)
     generate_class_descriptions(main_class, uuids, subclasses)
-    generate_progression(main_class, uuids, allowmulticlass, subclasses, subclasslevel)
+    generate_progression(main_class, uuids, allowmulticlass, subclasses,
+                         subclasslevel)
     generate_ability_distribution(main_class, uuids)
     generate_lists_and_equipment(main_class)
+    generate_action_resource(main_class, uuids)
