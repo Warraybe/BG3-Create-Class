@@ -44,7 +44,8 @@ ___
       - meta.lsx  
   - Public  
     - Classname  
-      - ActionResourceDefinitions  
+      - ActionResourceDefinitions
+        - ActionResourceDefinitions.lsx 
       - Assets  
         - Textures  
           - Icons  
