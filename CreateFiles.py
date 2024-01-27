@@ -2,7 +2,7 @@ import os
 import uuid
 
 
-def create_uuids(main_class, subclasses=None):
+def create_uuids(subclasses=None):
     uuid_list = {
         "mod_uuid": uuid.uuid4(),
         "main_class_uuid": uuid.uuid4(),
@@ -407,12 +407,8 @@ def generate_action_resource(main_class, uuids):
 </save>""")
 
 
-def create_files(
-        main_class,
-        subclasses=None,
-        subclasslevel=None,
-):
-    uuids = create_uuids(main_class, subclasses)
+def create_files(main_class, subclasses=None, subclasslevel=None):
+    uuids = create_uuids(subclasses)
     generate_localization(main_class, uuids, subclasses)
     generate_meta(main_class, uuids)
     generate_class_descriptions(main_class, uuids, subclasses)
