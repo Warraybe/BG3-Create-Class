@@ -129,17 +129,14 @@ def generate_class_descriptions(main_class, uuids, subclasses=None):
 
 
 def generate_progression(
-        main_class, uuids, allowmulticlass, subclasses=None, subclasslevel=None
+        main_class, uuids, subclasses=None, subclasslevel=None
 ):
     progression_content = """<?xml version="1.0" encoding="UTF-8"?>
     <save>
         <version major="4" minor="0" revision="6" build="5"/>
         <region id="Progressions">
             <node id="root">
-                <children>"""
-
-    if allowmulticlass:
-        progression_content += f"""
+                <children>
                     <node id="Progression">
                     <attribute id="AllowImprovement" type="bool" value="false"/>
                     <attribute id="Boosts" type="LSString" value="ProficiencyBonus(Skill,SleightOfHand);Proficiency(LightArmor);Proficiency(MediumArmor);Proficiency(Shields);Proficiency(Firearms);Proficiency(Slings)"/>
@@ -420,7 +417,7 @@ def create_files(
     generate_localization(main_class, uuids, subclasses)
     generate_meta(main_class, uuids)
     generate_class_descriptions(main_class, uuids, subclasses)
-    generate_progression(main_class, uuids, allowmulticlass, subclasses,
+    generate_progression(main_class, uuids, subclasses,
                          subclasslevel)
     generate_ability_distribution(main_class, uuids)
     generate_lists_and_equipment(main_class)
