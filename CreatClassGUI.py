@@ -32,7 +32,7 @@ window.geometry("800x600")
 #                           padx=30,
 #                           pady=30)
 
-# Creating Menubar 
+# Creating Menubar
 menubar = tk.Menu(window)
 
 # Adding File Menu
@@ -55,12 +55,12 @@ tools_menu.add_command(label="Lslib",
                        command=lambda: open_link(
                            "https://github.com/Norbyte/lslib"))
 
-# Adding Help Menu 
+# Adding Help Menu
 help_menu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Help", menu=help_menu)
 help_menu.add_command(label="About", command=lambda: open_link(
     "https://github.com/Warraybe/BG3-Create-Class"))
 
-# display Menu 
+# display Menu
 window.config(menu=menubar)
 tk.mainloop()
