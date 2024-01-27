@@ -409,7 +409,6 @@ def generate_action_resource(main_class, uuids):
 
 def create_files(
         main_class,
-        allowmulticlass,
         subclasses=None,
         subclasslevel=None,
 ):
