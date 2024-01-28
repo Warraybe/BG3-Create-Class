@@ -9,7 +9,7 @@ class LocalizationTab(ttk.Frame):
         super().__init__(*args, **kwargs)
 
         self.label_main_name = ttk.Label(self,
-                                         text=f"{config_tab.entry_classname.get()} Description:")
+                                         textvariable=config_tab.classname)
 
         self.place_widgets()
 
