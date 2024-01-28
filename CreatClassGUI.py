@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 import webbrowser
 
+from ConfigTab import ConfigTab
 from CreateFiles import create_files
 from CreateFolders import create_folders
 
@@ -17,19 +18,37 @@ def create_mod(mod_type):
 
     if sub_names:
         sub_names = [sub.strip() for sub in sub_names.split(",")]
-        sub_level = tabcontrol.children["!frame"].children["!entry3"].get()
 
     if mod_type == "class":
         sub_level = tabcontrol.children["!frame"].children["!entry3"].get()
         if sub_level:
             sub_level = int(sub_level)
-
         create_folders(main_name)
         create_files(main_name, sub_names, sub_level)
 
 
+def create_localization_tab(localization_tab):
+    main_name = str(tabcontrol.children["!frame"].children["!entry"].get())
+    sub_names = tabcontrol.children["!frame"].children["!entry2"].get()
+
+    label_main_name = ttk.Label(localization_tab,
+                                text=f"{main_name} Description:")
+    entry_main_desc = ttk.Entry(localization_tab, width=100)
+
+    label_main_name.grid(column=0,
+                         row=0,
+                         padx=10,
+                         pady=5,
+                         sticky=tk.W)
+    entry_main_desc.grid(column=0,
+                         row=1,
+                         padx=10,
+                         pady=0,
+                         sticky=tk.W)
+
+
 def create_class():
-    menubar.add_command(label="Save",
+    menubar.add_command(label="Create Class",
                         command=lambda: create_mod("class"))
     # Clear tabs
     for tab in tabcontrol.winfo_children():
@@ -37,63 +56,19 @@ def create_class():
             tab.destroy()
 
     # Create tabs
-    config_tab = ttk.Frame(tabcontrol)
-    tab2 = ttk.Frame(tabcontrol)
-    tabcontrol.add(config_tab, text='Config')
-    tabcontrol.add(tab2, text='Tab 2')
+    config_tab = ConfigTab(tabcontrol)
+    localization_tab = ttk.Frame(tabcontrol)
+    tabcontrol.add(config_tab, text='Required Settings')
+    tabcontrol.add(localization_tab, text='Localization Settings')
     tabcontrol.pack(expand=1, fill="both")
 
-    # Create widgets
-    label_classname = ttk.Label(config_tab, text="Class name (Required):")
-    entry_classname = ttk.Entry(config_tab, width=50)
-    label_subclassnames = ttk.Label(config_tab,
-                                    text="Subclass name(s) (Optional):")
-    entry_subclassnames = ttk.Entry(config_tab, width=100)
-    label_subclass_level = ttk.Label(config_tab,
-                                     text="Subclass level (Optional):")
-    entry_subclass_level = ttk.Entry(config_tab, width=5)
-
-    # Place widgets
-    label_classname.grid(column=0,
-                         row=0,
-                         padx=10,
-                         pady=0,
-                         sticky=tk.W)
-    entry_classname.grid(column=0,
-                         row=1,
-                         padx=10,
-                         pady=0,
-                         sticky=tk.W)
-    label_subclassnames.grid(column=0,
-                             row=2,
-                             padx=10,
-                             pady=0,
-                             sticky=tk.W)
-    entry_subclassnames.grid(column=0,
-                             row=3,
-                             padx=10,
-                             pady=0, sticky=tk.W)
-    label_subclass_level.grid(column=1, row=2, padx=10, pady=0, sticky=tk.W)
-    entry_subclass_level.grid(column=1,
-                              row=3,
-                              padx=10,
-                              pady=0)
-
-    ttk.Label(tab2,
-              text="Lets dive into the\
-    world of computers").grid(column=0,
-                              row=0,
-                              padx=30,
-                              pady=30)
+    # create_localization_tab(localization_tab)
 
 
 # Create tkinter window
 window = tk.Tk()
 window.title("BG3 Mod Creation Tool")
-window.geometry("800x600")
-
-# Mod type
-mod_type = None
+window.geometry("800x150")
 
 # Create tab controller
 tabcontrol = ttk.Notebook(window)
