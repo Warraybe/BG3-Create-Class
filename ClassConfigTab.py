@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 
-class ConfigTab(ttk.Frame):
+class ClassConfigTab(ttk.Frame):
     """Content for the required tab for creating a class mod."""
 
     def __init__(self, *args, **kwargs):
