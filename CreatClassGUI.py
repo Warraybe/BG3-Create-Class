@@ -6,6 +6,7 @@ from ClassConfigTab import ClassConfigTab
 # from CreateFiles import create_files
 # from CreateFolders import create_folders
 from LocalizationTab import LocalizationTab
+from MetaTab import MetaTab
 
 
 def open_link(url):
@@ -29,15 +30,18 @@ def create_class():
     # Create tabs
     config_tab = ClassConfigTab(nb)
     localization_tab = LocalizationTab(config_tab, nb)
-    nb.add(config_tab, text='Required Settings', )
-    nb.add(localization_tab, text='Localization Settings')
+    meta_tab = MetaTab(nb)
+    nb.add(config_tab, text='Configure class')
+    nb.add(meta_tab, text="Meta")
+    nb.add(localization_tab, text='Localization')
+
     nb.pack(expand=1, fill="both")
 
 
 # Create tkinter window
 root = tk.Tk()
 root.title("BG3 Mod Creation Tool")
-root.geometry("800x150")
+root.geometry("650x150")
 
 # Create notebook
 nb = ttk.Notebook(root)
